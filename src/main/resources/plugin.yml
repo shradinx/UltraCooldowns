@@ -1,0 +1,5 @@
+name: UltraCooldowns
+version: '${version}'
+main: me.shradinx.ultracooldowns.UltraCooldowns
+api-version: '1.21'
+author: Shradinx
