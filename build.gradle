@@ -9,8 +9,9 @@ version = '0.1.0-DEV'
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
+            artifactId = 'UltraCooldowns'
         }
     }
 }
