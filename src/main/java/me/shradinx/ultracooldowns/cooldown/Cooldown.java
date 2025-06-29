@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.shradinx.ultracooldowns.UltraCooldowns;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -39,7 +38,16 @@ public class Cooldown extends BukkitRunnable implements ConfigurationSerializabl
     @Getter(AccessLevel.NONE)
     private final JavaPlugin plugin;
     
-    public Cooldown(JavaPlugin plugin, int id, UUID player, long initialTime, int duration, String reason, boolean showMessage) {
+    /**
+     * @param plugin Main plugin instance obtained through {@link UltraCooldowns#getPlugin()}
+     * @param id Random ID to assign for config saving/loading
+     * @param player UUID of player involved
+     * @param initialTime Starting time (typically {@link System#currentTimeMillis()})
+     * @param duration Duration of the cooldown (in seconds)
+     * @param reason Reason for the cooldown
+     * @param showMessage Should action bar message be displayed when on cooldown
+     */
+    protected Cooldown(JavaPlugin plugin, int id, UUID player, long initialTime, int duration, String reason, boolean showMessage) {
         this.player = player;
         this.initialTime = initialTime;
         this.duration = duration;
@@ -52,6 +60,9 @@ public class Cooldown extends BukkitRunnable implements ConfigurationSerializabl
         start();
     }
     
+    /**
+     * Starts the cooldown
+     */
     public void start() {
         this.runTaskTimer(plugin, 0L, 20L);
         CooldownManager.getCooldowns().add(this);
@@ -99,6 +110,9 @@ public class Cooldown extends BukkitRunnable implements ConfigurationSerializabl
         sendActionBar(message);
     }
     
+    /**
+     * Removes and ends the cooldown
+     */
     public void remove() {
         CooldownManager.getCooldowns().remove(this);
         this.cancel();
