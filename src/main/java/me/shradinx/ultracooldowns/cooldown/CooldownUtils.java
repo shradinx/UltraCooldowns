@@ -37,10 +37,23 @@ public class CooldownUtils {
         return false;
     }
     
-    public static String formatTimeLeft(int timeLeft) {
-        int hours = timeLeft / 3600;
-        int minutes = (timeLeft % 3600) / 60;
-        int seconds = timeLeft % 60;
+    /**
+     * @param id ID to check
+     * @return True if cooldown with matching ID was found, otherwise false
+     */
+    public static boolean checkCooldownID(int id) {
+        return !CooldownManager.getCooldowns().stream()
+            .filter(c -> c.getId() == id).toList().isEmpty();
+    }
+    
+    /**
+     * @param time Time in seconds to format
+     * @return Formatted time in HH:mm:ss
+     */
+    public static String formatTimeLeft(long time) {
+        long hours = time / 3600;
+        long minutes = (time % 3600) / 60;
+        long seconds = time % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

@@ -1,6 +1,7 @@
 package me.shradinx.ultracooldowns.cooldown;
 
 import lombok.Getter;
+import me.shradinx.ultracooldowns.UltraCooldowns;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,8 +11,10 @@ import java.util.List;
 import java.util.Random;
 
 public class CooldownManager {
+    
     @Getter
     private static final List<Cooldown> cooldowns = new ArrayList<>();
+    
     /**
      * @param player Player to apply cooldown to
      * @param seconds Duration of cooldown
@@ -19,26 +22,35 @@ public class CooldownManager {
      * @param showMessage Whether to show cooldown message as actionbar
      * @return Status of new or existing cooldown
      */
-    public static CooldownStatus handleCooldown(JavaPlugin plugin, Player player, int seconds, String reason, boolean showMessage) {
+    public static CooldownStatus handleCooldown(Player player, int seconds, String reason, boolean showMessage) {
         if (seconds <= 0) return CooldownStatus.INVALID;
         Cooldown pCooldown = getCooldown(player, reason);
-        if (pCooldown != null) {
-            long timeLeft = pCooldown.getTimeLeft();
-            if (timeLeft > 0) {
-                pCooldown.sendOnCooldownMessage();
-                return CooldownStatus.ON_COOLDOWN;
-            } else {
-                pCooldown.remove();
-                pCooldown.sendOffCooldownMessage();
-                return CooldownStatus.OFF_COOLDOWN;
-            }
-        }
+        CooldownStatus status = checkTimeLeft(pCooldown);
+        if (status != CooldownStatus.NEW_COOLDOWN) return status;
         
         Random random = new Random();
         int id = random.nextInt(1, 1000);
-        if (!cooldowns.stream().filter(c -> c.getId() == id).toList().isEmpty()) return CooldownStatus.ON_COOLDOWN;
-        Cooldown cd = new Cooldown(plugin, id, player.getUniqueId(), System.currentTimeMillis(), seconds, reason, showMessage);
+        if (CooldownUtils.checkCooldownID(id)) return CooldownStatus.ON_COOLDOWN;
+        Cooldown cd = new Cooldown(UltraCooldowns.getPlugin(), id, player.getUniqueId(), System.currentTimeMillis(), seconds, reason, showMessage);
         return CooldownStatus.NEW_COOLDOWN;
+    }
+    
+    /**
+     * @param cd Possibly-null Cooldown object
+     * @return Status of cooldown based on the time left
+     */
+    private static CooldownStatus checkTimeLeft(@Nullable Cooldown cd) {
+        if (cd == null) return CooldownStatus.NEW_COOLDOWN;
+        
+        long timeLeft = cd.getTimeLeft();
+        if (timeLeft > 0) {
+            cd.sendOnCooldownMessage();
+            return CooldownStatus.ON_COOLDOWN;
+        } else {
+            cd.remove();
+            cd.sendOffCooldownMessage();
+            return CooldownStatus.OFF_COOLDOWN;
+        }
     }
     
     /**
@@ -68,6 +80,10 @@ public class CooldownManager {
         return null;
     }
     
+    /**
+     * @param player Player to remove all cooldowns for
+     * @apiNote This will remove <b>ALL</b> cooldowns for the provided player
+     */
     public static void removeAllCooldowns(Player player) {
         List<Cooldown> pCooldowns = getCooldowns(player);
         pCooldowns.forEach(Cooldown::remove);
