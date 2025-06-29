@@ -1,9 +1,9 @@
-package me.shradinx.ultracooldowns.cooldown;
+package com.github.shradinx.ultracooldowns.cooldown;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import me.shradinx.ultracooldowns.UltraCooldowns;
+import com.github.shradinx.ultracooldowns.UltraCooldowns;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

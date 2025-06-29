@@ -1,4 +1,4 @@
-package me.shradinx.ultracooldowns.cooldown;
+package com.github.shradinx.ultracooldowns.cooldown;
 
 import org.bukkit.entity.Player;
 

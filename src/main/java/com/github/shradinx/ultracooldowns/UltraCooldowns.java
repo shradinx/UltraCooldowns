@@ -1,8 +1,8 @@
-package me.shradinx.ultracooldowns;
+package com.github.shradinx.ultracooldowns;
 
 import lombok.Getter;
-import me.shradinx.ultracooldowns.cooldown.Cooldown;
-import me.shradinx.ultracooldowns.cooldown.CooldownManager;
+import com.github.shradinx.ultracooldowns.cooldown.Cooldown;
+import com.github.shradinx.ultracooldowns.cooldown.CooldownManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 

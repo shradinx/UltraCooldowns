@@ -1,4 +1,4 @@
-package me.shradinx.ultracooldowns.cooldown;
+package com.github.shradinx.ultracooldowns.cooldown;
 
 /**
  * Status of player cooldown

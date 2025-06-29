@@ -1,9 +1,8 @@
-package me.shradinx.ultracooldowns.cooldown;
+package com.github.shradinx.ultracooldowns.cooldown;
 
 import lombok.Getter;
-import me.shradinx.ultracooldowns.UltraCooldowns;
+import com.github.shradinx.ultracooldowns.UltraCooldowns;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

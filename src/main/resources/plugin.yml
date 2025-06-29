@@ -1,6 +1,6 @@
 name: UltraCooldowns
 version: '${version}'
 website: https://github.com/shradinx/UltraCooldowns
-main: me.shradinx.ultracooldowns.UltraCooldowns
+main: com.github.shradinx.ultracooldowns.UltraCooldowns
 api-version: '1.21'
 author: Shradinx
