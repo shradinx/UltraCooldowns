@@ -21,7 +21,7 @@ public class CooldownManager {
      * @param showMessage Whether to show cooldown message as actionbar
      * @return Status of new or existing cooldown
      */
-    public static CooldownStatus handleCooldown(Player player, int seconds, String reason, boolean showMessage) {
+    public static CooldownStatus register(Player player, int seconds, String reason, boolean showMessage) {
         if (seconds <= 0) return CooldownStatus.INVALID;
         Cooldown pCooldown = getCooldown(player, reason);
         CooldownStatus status = checkTimeLeft(pCooldown);
